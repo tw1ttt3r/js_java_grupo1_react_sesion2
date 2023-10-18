@@ -1,9 +1,11 @@
-import './Card.css';
+//import './Card.css';
+import style from './Card.module.css';
 
-function Card(props) { // objeto
+function Card(props) { // objeto const persona = { nombre: "pedro" }   persona.edad  = undefined
 
     // addEventListener("evento a escuchar", function)
 // 
+    //const [ conDescuento, setConDescuento ] = useState(props.descuento ? "green" : "beige");
 
     const handleClickButton = (nombreProducto) => {
     // const handleClickButton = (evt) => {
@@ -13,15 +15,15 @@ function Card(props) { // objeto
         // console.log(evt)
     }
 
-    return (
-        <section className='container'>
-            <div className='container-image'>
+    return (   // !   true false
+        <section style={{fontSize: "40px"}} className={`${style.container} ${props.descuento !== undefined && props.descuento ? style.descuento : style.normal}`}>
+            <div className={style["container-image"]}>
                 <img src={props.src} alt={props.alt} />
             </div>
-            <div className='container-data'>
-                <p className='nombre'>{props.nombre}</p>
-                <p className='isbn'>{props.isbn}</p>
-                <p className='price'>${props.precio}</p>
+            <div className={style['container-data']}>
+                <p className={style['nombre']}>{props.nombre}</p>
+                <p className={style['nombre']}>{props.isbn}</p>
+                <p className={style['price']}>${props.precio}</p>
             </div>
             <div>
                 {/* <button onClick={() => handleClickButton(props.nombre)}>Agregar</button> */}
