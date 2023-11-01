@@ -1,9 +1,11 @@
 import './App.css';
 import Card from "./components/card/Card";
 import { Barra, ContainerOption, Option } from "./components/barra/Barra"
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useReducer, useRef, useState } from "react";
 import movies from "./data/movies.json";
 import descuentos from "./data/descuentos.json";
+import Modal from './components/modal/Modal';
+import Carrito from './stores/carrito';
 
 function App() {
 
@@ -21,6 +23,7 @@ function App() {
   const [todosDescuentos, setTodosDescuentos] = useState([...descuentos]);
   const [textoActualizado, setTextoActualizado] = useState("")
   const [carrito, setCarrito] = useState([]); 
+  const [visible, setVisible] = useState(false);
   //let carrito = useRef([]); 
   let texto = useRef(null);
 
@@ -33,15 +36,33 @@ function App() {
   }
 
   const imprime = () => setTextoActualizado(texto.current.value)
+  const visualiza  = () => {
+    dispatch({ type: "inicia_app" })
+    setVisible(!visible)
+  };
+  const [state, dispatch] = useReducer(Carrito, { compras: [] });
 
   // funciones anonimas
   // setPeliculas()
+
+  useEffect(() => {
+    console.log("solo la primera vez")
+  }, []); // se ejecuta una solo vez
+  useEffect(() => {
+    // dispatch({ type: "inicia_app" });
+    console.log("solo cuando visible cambie")
+  }, [visible]); // lista de pedendendias
+
+  useEffect(() => {
+    console.log("state-reducer", state);
+  }, [dispatch]);
+
 
   return (
     <section>
       <Barra>
         <ContainerOption>
-          <Option>Opcion 1</Option>
+          <Option onClick={visualiza}>Opcion 1</Option>
           <Option>Opcion 2</Option>
           <Option>Opcion 3</Option>
         </ContainerOption>
@@ -56,7 +77,7 @@ function App() {
           <Fragment key={`pelicula-${posicion}`}>
             { descuento(pelicula.id) && <Card src={pelicula.image} alt={`pelicula-${pelicula.id}`} nombre={pelicula.name} isbn={pelicula.isbn} precio={pelicula.price} />}
             { descuento(pelicula.id) && <span>Descuento incluido</span> }
-          </ Fragment>
+          </Fragment>
           )
         }
         <button onClick={agrega}>Agregar</button>
@@ -81,6 +102,7 @@ function App() {
         <Card src={peliculas[18].image} alt={`pelicula-${peliculas[18].id}`} nombre={peliculas[18].name} isbn={peliculas[18].isbn} precio={peliculas[18].price} />
         <Card src={peliculas[19].image} alt={`pelicula-${peliculas[19].id}`} nombre={peliculas[19].name} isbn={peliculas[19].isbn} precio={peliculas[19].price} descuento={true}/>  */}
     </main>
+    { visible && <Modal close={visualiza} /> }
     </section>
   );
 }
