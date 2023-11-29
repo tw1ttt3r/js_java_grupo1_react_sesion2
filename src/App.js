@@ -8,6 +8,9 @@ import useSWAPI from './hooks/useSWAPI';
 // import Modal from './components/modal/Modal';
 // import Carrito from './stores/carrito';
 
+import Navbar from './components/nav/nav';
+import { Outlet } from 'react-router';
+
 function App() {
 
   console.log("me imprimo");
@@ -120,43 +123,47 @@ function App() {
 */
 
   return (
-    <section>
-      {info !== null && info.results !== undefined && info.results.length > 0 && info.results.map( (people) => <div>
-        <h3>{people.name}</h3>
-      </div>)}
-      {
-        data !== null && data.info !== null && data.info.previous !== null && <button onClick={() => data.navega('prev')}>Anterior Pagina</button>
-      }
-      {
-        data !== null && data.info !== null && data.info.next !== null && <button onClick={() => data.navega('next')}>Siguiente Pagina</button>
-      }
-      {
-        info === null && <button onClick={setResultados}>Carga informacion</button>
-      }
-      {/* <Barra>
-        <ContainerOption>
-          <Option onClick={visualiza}>Opcion 1</Option>
-          <Option>Opcion 2</Option>
-          <Option>Opcion 3</Option>
-        </ContainerOption>
-      </Barra>
-      <div>
-        <p> {textoActualizado} </p>
-        <input ref={texto} type='text' />
-        <button onClick={imprime}>Actualizar</button>
-      </div>
-      <main className="App">
-        { peliculas.map((pelicula, posicion) =>
-          <Fragment key={`pelicula-${posicion}`}>
-            { descuento(pelicula.id) && <Card src={pelicula.image} alt={`pelicula-${pelicula.id}`} nombre={pelicula.name} isbn={pelicula.isbn} precio={pelicula.price} />}
-            { descuento(pelicula.id) && <span>Descuento incluido</span> }
-          </Fragment>
-          )
+    <>
+      {/* <Navbar /> */}
+      <section>
+        {info !== null && info.results !== undefined && info.results.length > 0 && info.results.map( (people) => <div>
+          <h3>{people.name}</h3>
+        </div>)}
+        {
+          data !== null && data.info !== null && data.info.previous !== null && <button onClick={() => data.navega('prev')}>Anterior Pagina</button>
         }
-        <button onClick={agrega}>Agregar</button>
-    </main>
-    { visible && <Modal close={visualiza} /> } */}
-    </section>
+        {
+          data !== null && data.info !== null && data.info.next !== null && <button onClick={() => data.navega('next')}>Siguiente Pagina</button>
+        }
+        {
+          info === null && <button onClick={setResultados}>Carga informacion</button>
+        }
+        <Outlet />
+        {/* <Barra>
+          <ContainerOption>
+            <Option onClick={visualiza}>Opcion 1</Option>
+            <Option>Opcion 2</Option>
+            <Option>Opcion 3</Option>
+          </ContainerOption>
+        </Barra>
+        <div>
+          <p> {textoActualizado} </p>
+          <input ref={texto} type='text' />
+          <button onClick={imprime}>Actualizar</button>
+        </div>
+        <main className="App">
+          { peliculas.map((pelicula, posicion) =>
+            <Fragment key={`pelicula-${posicion}`}>
+              { descuento(pelicula.id) && <Card src={pelicula.image} alt={`pelicula-${pelicula.id}`} nombre={pelicula.name} isbn={pelicula.isbn} precio={pelicula.price} />}
+              { descuento(pelicula.id) && <span>Descuento incluido</span> }
+            </Fragment>
+            )
+          }
+          <button onClick={agrega}>Agregar</button>
+      </main>
+      { visible && <Modal close={visualiza} /> } */}
+      </section>
+    </>
   );
 }
 
