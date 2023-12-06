@@ -13,9 +13,9 @@ function busquedaAvanzada(campo, busqueda) {
 function busquedaPorPrecio(mayorA, precio) {
     const resultados = movies.filter((valor) => {
         if (mayorA) {
-            return valor[campo] > precio
+            return valor.price > precio
         }
-        return valor[campo] < precio
+        return valor.price < precio
     });
     return resultados
 }

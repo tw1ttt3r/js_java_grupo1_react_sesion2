@@ -15,3 +15,29 @@ describe("Pruebas de la funcionalidad de buscaPelicula", () => {
         expect(resultado.length === 0).toBe(true)
     })
 });
+
+describe("Pruebas de funcionalidad para busquedaAvanzada", () => {
+    test("Que exista al menos una pelicula con el precio 98.12", () => {
+        const resultados = busquedaAvanzada("price", 98.12)
+        expect(resultados.length).toBeGreaterThan(0)
+    });
+    
+    test("Que no exista una pelicula con el id 45", () => {
+        const resultados = busquedaAvanzada("id", 45)
+        expect(resultados.length).toBe(0)
+    });
+});
+
+describe("Pruebas de funcionalidad para busquedaPorPrecio", () => {
+    test("Que pueda comprar al menos 2 peliculas con 200", () => {
+        const resultados = busquedaPorPrecio(false, 100)
+        expect(resultados.length).toBeGreaterThan(2)
+    });
+    
+    test("Que pueda comprar la pelicula Tiptoes con mis 60 pesitos", () => {
+        const comprarse = "Tiptoes"
+        const resultados = busquedaPorPrecio(false, 60)
+        const existe = resultados.filter((pelicula) => pelicula.name === comprarse)
+        expect(existe.length).toBeGreaterThan(0)
+    });
+});
